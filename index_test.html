@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Resume Upload</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">📜 Campus Drive Recruitment Checker</div>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Apply for a Campus Drive</h2>
+        <p>Fill in your details and select the company you are applying for.</p>
+
+        <form id="uploadForm" action="apply_drive.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Reg No:</label>
+                <input type="text" name="regno" placeholder="Enter your registration number" required>
+            </div>
+
+            <div class="form-group">
+                <label>Qualification:</label>
+                <select name="qualification" id="qualification" required>
+                    <option value="" disabled selected>Select Qualification</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="M.Tech">M.Tech</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="M.Sc">M.Sc</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="Diploma">Diploma</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="otherQualificationDiv" style="display: none;">
+                <label>Specify Qualification:</label>
+                <input type="text" name="other_qualification" id="otherQualificationInput" placeholder="Enter your qualification">
+            </div>
+
+            <div class="form-group">
+                <label>Backlogs:</label>
+                <input type="number" name="backlogs" placeholder="Number of backlogs" required>
+            </div>
+
+            <div class="form-group">
+                <label>CGPA:</label>
+                <input type="number" step="0.01" name="cgpa" placeholder="Enter your CGPA" required>
+            </div>
+
+            <div class="form-group">
+                <label>Select Campus Drive:</label>
+                <select name="campus_drive" id="campus_drive" required>
+                    <option value="" disabled selected>Loading available drives...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Resume (PDF only):</label>
+                <input type="file" name="resume" accept=".pdf" required>
+            </div>
+
+            <button type="submit">Apply for Drive</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Campus Drive Recruitment Checker | Designed for Students</p>
+    </footer>
+
+    <script>
+        document.getElementById("qualification").addEventListener("change", function() {
+            let otherDiv = document.getElementById("otherQualificationDiv");
+            let otherInput = document.getElementById("otherQualificationInput");
+
+            if (this.value === "Other") {
+                otherDiv.style.display = "block";
+                otherInput.required = true;
+            } else {
+                otherDiv.style.display = "none";
+                otherInput.required = false;
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("get_recruiter_data.php")
+                .then(response => response.json())
+                .then(data => {
+                    let dropdown = document.getElementById("campus_drive");
+                    dropdown.innerHTML = '<option value="" disabled selected>Select Campus Drive</option>';
+                    data.forEach(drive => {
+                        dropdown.innerHTML += `<option value="${drive.id}">${drive.companyname} - ${drive.jobrole}</option>`;
+                    });
+                })
+                .catch(error => console.error("Error fetching recruiter data:", error));
+        });
+    </script>
+</body>
+</html>

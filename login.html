@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Drive Recruitment Checker - Login</title>
+    <link rel="stylesheet" href="login_styles.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Campus Drive Recruitment Checker</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Login</h2>
+
+        <!-- Toggle Between Student & Recruiter -->
+        <div class="toggle-buttons">
+            <button id="student-btn" class="active" onclick="setUserType('student')">Student</button>
+            <button id="recruiter-btn" onclick="setUserType('recruiter')">Recruiter</button>
+        </div>
+
+        <!-- Login Form -->
+        <form action="login.php" method="POST">
+            <input type="hidden" id="userType" name="userType" value="student">
+
+            <label for="username" id="username-label">Student Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your student username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- Links -->
+        <div class="links">
+            <a href="forgot_password.html">Forgot Password?</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+
+    <script src="login_script.js"></script>
+
+</body>
+</html>

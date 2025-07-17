@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Drive Recruitment Checker</title>
+    <link rel="stylesheet" href="recruiter.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Campus Drive Recruitment Checker</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="recruiter.html" class="active">Post a Job</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Post a Job</h2>
+        <p>Fill in the job details to find the best candidates.</p>
+
+        <form id="jobForm" action="post_job.php" method="POST">
+            <div class="form-group">
+                <label>Company Name:</label>
+                <input type="text" name="company" placeholder="Enter company name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Job Role:</label>
+                <input type="text" name="jobrole" placeholder="Enter job role" required>
+            </div>
+
+            <div class="form-group">
+                <label>Minimum CGPA Required:</label>
+                <input type="number" step="0.01" name="cgpa" placeholder="Minimum CGPA" required>
+            </div>
+
+            <div class="form-group">
+                <label>Backlog Limit:</label>
+                <input type="number" name="backlog" placeholder="Maximum backlogs allowed" required>
+            </div>
+
+            <div class="form-group">
+                <label>Degree Required:</label>
+                <input type="text" name="degree" placeholder="Required degree (e.g., B.Tech, M.Tech)" required>
+            </div>
+
+            <div class="form-group">
+                <label>Skills Required:</label>
+                <input type="text" name="skills" placeholder="E.g., Java, Python, React" required>
+            </div>
+
+            <div class="form-group">
+                <label>Certifications Preferred:</label>
+                <input type="text" name="certifications" placeholder="E.g., AWS, Google Cloud, PMP">
+            </div>
+
+            <div class="form-group">
+                <label>Application Deadline:</label>
+                <input type="date" name="deadline" required>
+            </div>
+
+            <div class="form-group">
+                <label>Soft Skills Required:</label>
+                <input type="text" name="softskills" placeholder="E.g., Leadership, Communication">
+            </div>
+
+            <div class="form-group">
+                <label>Minimum ATS Score (if applicable):</label>
+                <input type="number" step="0.01" name="ats_score" placeholder="Enter ATS Score" required>
+            </div>
+
+            <button type="submit">Post Job</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Campus Drive Recruitment Checker | Designed for Hiring Managers</p>
+    </footer>
+
+    <script>
+        document.getElementById("jobForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+
+            fetch("post_job.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("status").innerText = data;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
